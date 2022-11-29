@@ -5,6 +5,8 @@ namespace PokemonReviewApp.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public string Password { get; set; } = string.Empty;
         public DateTime BirthDate { get; set; }
     }
 }
