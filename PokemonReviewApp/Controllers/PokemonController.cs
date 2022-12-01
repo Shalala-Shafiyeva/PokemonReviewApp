@@ -13,17 +13,19 @@ namespace PokemonReviewApp.Controllers
         private readonly IPokemonRepository _pokemonRepository;
         private readonly IReviewRepository _reviewRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<PokemonController> _logger;
 
         public PokemonController(IPokemonRepository pokemonRepository,
             IReviewRepository reviewRepository,
-            IMapper mapper)
+            IMapper mapper, ILogger<PokemonController> logger)
         {
             _pokemonRepository = pokemonRepository;
             _reviewRepository = reviewRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("all Pokemons")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Pokemon>))]
         public IActionResult GetPokemons()
         {
@@ -31,7 +33,7 @@ namespace PokemonReviewApp.Controllers
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            _logger.LogInformation("Get Pokemons at {dt}", DateTime.Now.ToLongTimeString);
             return Ok(pokemons);
         }
 

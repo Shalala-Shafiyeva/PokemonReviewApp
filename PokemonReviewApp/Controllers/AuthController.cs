@@ -15,10 +15,12 @@ namespace PokemonReviewApp.Controllers
     {
         public static Pokemon pokemon = new Pokemon();
         private readonly IConfiguration configuration;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, ILogger<AuthController> logger)
         {
             this.configuration = configuration;
+            _logger = logger;
         }
 
         [HttpPost("register")]
@@ -29,7 +31,7 @@ namespace PokemonReviewApp.Controllers
             pokemon.Name = request.Name;
             pokemon.PasswordHash = passwordHash;
             pokemon.PasswordSalt = passwordSalt;
-
+            
             return Ok(pokemon);
         }
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
